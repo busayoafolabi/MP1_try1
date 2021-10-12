@@ -56,8 +56,9 @@ namespace XMLValidatorNS
 
         /// <summary>
         /// Tests if the stack is empty.
-        /// Returns true if the stack is empty; false otherwise.
+        /// Returns true if the stack is empty; false otherwise
         /// </summary>
+        /// Make sure not to use STACK
         public bool IsEmpty()
         {
             return false; // return a dummy value for now: ToFix
