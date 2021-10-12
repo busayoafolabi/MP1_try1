@@ -3,7 +3,6 @@
 
 // You should implement this class.
 // You should add comments and improve the documentation.
-// Method
 
 using System;
 using System.Collections.Generic; 
