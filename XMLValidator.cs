@@ -37,7 +37,7 @@ namespace XMLValidatorNS
         /// If the tag passed is null, you should throw an "ArgumentException"
         /// </summary>
         /// <param name="tag"></param>
-        public void AddTag(XMLTag tag)
+        public void AddTag(XMLTag tag)//busayo
         {
             
         }
@@ -56,7 +56,7 @@ namespace XMLValidatorNS
         /// Remove from your validator's queue any tags that don't match the given element
         /// </summary>
         /// <param name="element"></param>
-        public void Remove(string element)
+        public void Remove(string element)//busayo
         {
  
         }

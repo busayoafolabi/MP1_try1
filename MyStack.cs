@@ -43,9 +43,9 @@ namespace XMLValidatorNS
         /// </summary>
         public XMLTag Pop()
         {
-            int num = stackInternal.Count - 1;
+            //int num = stackInternal.Count - 1;
             //XMLTag removeVar = stackInternal.RemoveAt(1);
-            return removeVar; // return a dummy value for now: ToFix
+            return null; // return a dummy value for now: ToFix --> return removeVar;
         }
 
 
