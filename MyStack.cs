@@ -32,7 +32,8 @@ namespace XMLValidatorNS
         /// </summary>
         public void Push(XMLTag tag)
         {
-             
+            stackInternal.Add(tag);
+            Console.WriteLine($"{tag}");
         }
 
         /// <summary> 
@@ -41,7 +42,9 @@ namespace XMLValidatorNS
         /// </summary>
         public XMLTag Pop()
         {
-            return null; // return a dummy value for now: ToFix
+            int num = stackInternal.Count - 1;
+            //XMLTag removeVar = stackInternal.RemoveAt(1);
+            return removeVar; // return a dummy value for now: ToFix
         }
 
 
@@ -51,7 +54,9 @@ namespace XMLValidatorNS
         /// </summary>
         public XMLTag Peek()
         {
-            return null; // return a dummy value for now: ToFix
+            XMLTag peekVar = stackInternal[stackInternal.Count - 1];
+
+            return peekVar; // return a dummy value for now: ToFix
         }
 
         /// <summary>
@@ -61,6 +66,11 @@ namespace XMLValidatorNS
         /// Make sure not to use STACK
         public bool IsEmpty()
         {
+            if(stackInternal.Count == 0)
+            {
+                return true;
+            }
+            else
             return false; // return a dummy value for now: ToFix
         }
     }
