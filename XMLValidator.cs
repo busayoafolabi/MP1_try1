@@ -14,12 +14,18 @@ namespace XMLValidatorNS
     {
         //field(s) here
 
+        //****DOUBLE CHECK
+        public Queue<XMLTag> newTags = new Queue<XMLTag>();
+
+
         /// <summary>
         /// initialize your validator to store an empty queue of XML tags
         /// </summary>
         public XMLValidator()
         {
-             
+            //***double check!!
+            Queue<XMLTag> newTags = new Queue<XMLTag>();
+
         }
 
         /// <summary>
@@ -29,7 +35,9 @@ namespace XMLValidatorNS
         /// <param name="tags"></param>
         public XMLValidator(Queue<XMLTag> tags)
         {
-             
+            //***double check!
+            Queue<XMLTag> newTags2 = new Queue<XMLTag>();
+
         }
 
         /// <summary>
@@ -39,7 +47,11 @@ namespace XMLValidatorNS
         /// <param name="tag"></param>
         public void AddTag(XMLTag tag)//busayo
         {
-            
+            if (tag is null)
+                throw new ArgumentException();//(Console.WriteLine("The tag is null"));
+
+            //else
+            //newTags.Add(tag); //what is the queue name?
         }
 
         /// <summary>
@@ -53,12 +65,23 @@ namespace XMLValidatorNS
         }
 
         /// <summary>
-        /// Remove from your validator's queue any tags that don't match the given element
+        /// Remove from your validator's queue any tags that match the given element
         /// </summary>
         /// <param name="element"></param>
         public void Remove(string element)//busayo
         {
- 
+            foreach (XMLTag word in newTags)
+            {
+                //for each entry in queue, if <element> or ,/element> is in the queue --> queue remove
+                
+                //word.GetElement gives the tag without the brackets
+                if (word.GetElement() == element)
+                {
+                    //no "Remove" keyword for Queue --> need another way - pop? dequeue?
+                    newTags.Dequeue();
+                }
+
+            }
         }
 
         /// <summary>
