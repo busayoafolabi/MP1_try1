@@ -1,18 +1,17 @@
 ﻿// MP1: XML Validator
 // Implementation of a simple stack for XMLTags.
-
+//TEST!!!!
 // You should implement this class.
 // You should add comments and improve the documentation.
 
 using System;
-using System.Collections.Generic; 
-//test
+using System.Collections.Generic;
 
 // An obvious reminder: 
 // You are only allowed to use List<T> to code your
 // own implemenation of a stack type, called MyStack
 
-namespace XMLValidatorNS
+namespace XMLValidator
 {
     public class MyStack
     {
@@ -43,9 +42,17 @@ namespace XMLValidatorNS
         /// </summary>
         public XMLTag Pop()
         {
-            //int num = stackInternal.Count - 1;
-            //XMLTag removeVar = stackInternal.RemoveAt(1);
-            return null; // return a dummy value for now: ToFix --> return removeVar;
+            if (stackInternal.Count == 0)
+            {
+                throw new InvalidOperationException("Stack Is Empty");
+            }
+            else
+            {
+                XMLTag removeVar = stackInternal[stackInternal.Count - 1];
+                stackInternal.RemoveAt(stackInternal.Count - 1);
+                return removeVar;
+            }
+            //return null; // return a dummy value for now: ToFix
         }
 
 
@@ -56,23 +63,25 @@ namespace XMLValidatorNS
         public XMLTag Peek()
         {
             XMLTag peekVar = stackInternal[stackInternal.Count - 1];
-
-            return peekVar; // return a dummy value for now: ToFix
+            return peekVar;
+            //return null; // return a dummy value for now: ToFix
         }
 
         /// <summary>
         /// Tests if the stack is empty.
-        /// Returns true if the stack is empty; false otherwise
+        /// Returns true if the stack is empty; false otherwise.
         /// </summary>
-        /// Make sure not to use STACK
         public bool IsEmpty()
         {
-            if(stackInternal.Count == 0)
+            if (stackInternal.Count == 0)
             {
                 return true;
             }
             else
-            return false; // return a dummy value for now: ToFix
+            {
+                return false;
+            }
+            //return false; // return a dummy value for now: ToFix
         }
     }
 }

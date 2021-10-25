@@ -8,14 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace XMLValidatorNS
+namespace XMLValidator
 {
     public class XMLValidator
     {
         //field(s) here
 
+        //declare queues in here and initialize them in bottom two constructors
+
         //****DOUBLE CHECK
         public Queue<XMLTag> newTags = new Queue<XMLTag>();
+        public Queue<XMLTag> newTags2 = new Queue<XMLTag>();
 
 
         /// <summary>
@@ -23,7 +26,7 @@ namespace XMLValidatorNS
         /// </summary>
         public XMLValidator()
         {
-            //***double check!!
+            //empty queue
             Queue<XMLTag> newTags = new Queue<XMLTag>();
 
         }
@@ -35,8 +38,8 @@ namespace XMLValidatorNS
         /// <param name="tags"></param>
         public XMLValidator(Queue<XMLTag> tags)
         {
-            //***double check!
-            Queue<XMLTag> newTags2 = new Queue<XMLTag>();
+            //a copy of queue newTags stored in newTags2
+            newTags2 = newTags;
 
         }
 
@@ -45,13 +48,17 @@ namespace XMLValidatorNS
         /// If the tag passed is null, you should throw an "ArgumentException"
         /// </summary>
         /// <param name="tag"></param>
-        public void AddTag(XMLTag tag)//busayo
+        public void AddTag(XMLTag tag)
         {
             if (tag is null)
-                throw new ArgumentException();//(Console.WriteLine("The tag is null"));
+            {
+                throw new ArgumentException("The tag is null");
 
-            //else
-            //newTags.Add(tag); //what is the queue name?
+
+
+            }
+            else
+                newTags.Enqueue(tag);
         }
 
         /// <summary>
@@ -59,26 +66,42 @@ namespace XMLValidatorNS
         /// to the constructor (if any) in their proper order
         /// </summary>
         /// <returns> a string that contains your validator's queue of XML tags </returns>
-        public string GetTags() 
+
+        public string GetTags()
         {
-            return null; // return a dummy value for now: ToFix
+            StringBuilder sb = new StringBuilder();
+            sb.Append("front [ ");
+            foreach (XMLTag x in this.newTags2)
+            {
+                sb.Append(x.ToString());
+                sb.Append(", ");
+            }
+
+            if (this.newTags2.Count != 0)
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
+
+            sb.Append(" ] back");
+
+            return sb.ToString();
         }
 
         /// <summary>
         /// Remove from your validator's queue any tags that match the given element
         /// </summary>
         /// <param name="element"></param>
-        public void Remove(string element)//busayo
+        public void Remove(string element)
         {
-            foreach (XMLTag word in newTags)
+            foreach (XMLTag word in newTags2)
             {
                 //for each entry in queue, if <element> or ,/element> is in the queue --> queue remove
-                
+
                 //word.GetElement gives the tag without the brackets
-                if (word.GetElement() == element)
+                if (word.GetElement().Contains(element))
                 {
-                    //no "Remove" keyword for Queue --> need another way - pop? dequeue?
-                    newTags.Dequeue();
+                    //removing from the queue copy
+                    newTags2.Dequeue();
                 }
 
             }
@@ -92,7 +115,51 @@ namespace XMLValidatorNS
         /// </summary>
         public void Validate()
         {
- 
+            MyStack validateStack = new MyStack;
+            int index = 0;
+
+            foreach (XMLTag tag in newTags)
+            {
+                if (tag.GetIsOpenTag() == true && tag.IsSelfClosing() == false)
+                {
+
+                    int lengthVal = tag.ToString().Length + index;
+                    Console.WriteLine(tag.ToString().PadLeft(lengthVal));
+
+                    validateStack.Push(tag);
+                    index += 3;
+
+                }
+
+                else if (tag.IsSelfClosing())
+                {
+
+                    int lengthVal = tag.ToString().Length + index;
+                    Console.WriteLine(tag.ToString().PadLeft(lengthVal));
+                    index += 3;
+
+                }
+
+
+                else
+                {
+                    XMLTag testTag = validateStack.Pop();
+
+                    if (tag.Matches(testTag))
+                    {
+
+                        index -= 3;
+                        int lengthVal = tag.ToString().Length + index;
+                        Console.WriteLine(tag.ToString().PadLeft(lengthVal));
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: Tags are NOT matching.");
+                        validateStack.Push(testTag);
+                    }
+                }
+            }
         }
 
     }
